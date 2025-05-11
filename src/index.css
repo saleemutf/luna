@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  /* color-scheme: light dark; */ /* Tailwind will handle this or you can re-add if specifically needed for a manual dark mode toggle affecting form elements */
+  /* color: rgba(255, 255, 255, 0.87); */ /* Let Tailwind components define their text colors */
+  /* background-color: #242424; */ /* App.jsx will set the overall background */
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  /* display: flex; */ /* REMOVED - this was centering the entire app */
+  /* place-items: center; */ /* REMOVED */
+  /* min-width: 320px; */ /* Can be kept if desired, or let Tailwind handle width */
+  /* min-height: 100vh; */ /* Can be kept if desired, or let Tailwind handle height */
+  /* Default body background if needed, but App.jsx should control main app background */
+  /* background-color: #ffffff; */ /* Or your preferred default if not using Tailwind on html/body directly */
+}
+
+/* Keep generic styles for a, h1, button if they are truly global overrides you want */
+/* Otherwise, prefer styling these with Tailwind utilities or @apply in component-specific CSS */
+a {
+  font-weight: 500;
+  /* color: #646cff; */ /* Let Tailwind handle link colors or define in theme */
+  text-decoration: inherit;
+}
+a:hover {
+  /* color: #535bf2; */
+}
+
+h1 {
+  /* font-size: 3.2em; */ /* Style with Tailwind text utilities, e.g., text-4xl */
+  /* line-height: 1.1; */
+}
+
+button {
+  /* These are very generic button styles. Tailwind provides its own reset/base for buttons. */
+  /* Consider removing these and styling buttons with Tailwind classes for consistency. */
+  /* border-radius: 8px; */
+  /* border: 1px solid transparent; */
+  /* padding: 0.6em 1.2em; */
+  /* font-size: 1em; */
+  /* font-weight: 500; */
+  /* font-family: inherit; */
+  /* background-color: #1a1a1a; */
+  /* cursor: pointer; */
+  /* transition: border-color 0.25s; */
+}
+/* button:hover {
+  border-color: #646cff;
+} */
+/* button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+} */
+
+/* @media (prefers-color-scheme: light) { ... } */ /* If you use Tailwind's dark mode (e.g., className="dark"), this manual override might not be needed or could conflict */
