@@ -215,8 +215,13 @@ const LeftPanel = ({
         <HistorySidebarSection title="Older" items={sidebarHistory.older} onItemClick={handleSidebarHistoryItemClick} />
       </div>
 
-      <div className="mt-auto sticky bottom-0 bg-white pt-3 pb-2 px-1">
-        <SettingsMenu />
+      <NavSection title="Settings" initiallyOpen={false}>
+        <div className="pl-2">
+          <SettingsMenu />
+        </div>
+      </NavSection>
+
+      <div className="mt-auto bg-white pt-3 pb-2 px-1">
         <LogoutButton onLogout={handleLogout} />
       </div>
       
