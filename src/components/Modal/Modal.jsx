@@ -33,23 +33,23 @@ const Modal = ({ isOpen, onClose, title, children, footerContent, size = 'md' })
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-60 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-opacity duration-300 ease-in-out"
+      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-opacity duration-300 ease-in-out"
       onClick={onClose} // Close on overlay click
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div 
-        className={`bg-gray-800 text-gray-200 rounded-lg shadow-2xl flex flex-col overflow-hidden w-full ${sizeClasses}`}
+        className={`bg-white text-gray-800 rounded-lg shadow-2xl flex flex-col overflow-hidden w-full ${sizeClasses}`}
         onClick={(e) => e.stopPropagation()} // Prevent close when clicking inside modal content
       >
         {/* Modal Header */}
         {title && (
-          <div className="modal-header flex justify-between items-center p-4 border-b border-gray-700">
-            <h3 id="modal-title" className="text-lg font-semibold text-gray-100">{title}</h3>
+          <div className="modal-header flex justify-between items-center p-4 border-b border-gray-200">
+            <h3 id="modal-title" className="text-lg font-semibold text-gray-800">{title}</h3>
             <button 
               onClick={onClose} 
-              className="text-gray-400 hover:text-white transition-colors p-1 rounded-full hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="text-gray-500 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
               aria-label="Close modal"
             >
               <i className="fas fa-times text-xl"></i>
@@ -58,13 +58,13 @@ const Modal = ({ isOpen, onClose, title, children, footerContent, size = 'md' })
         )}
         
         {/* Modal Body */}
-        <div className="modal-body p-4 md:p-6 overflow-y-auto flex-grow scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800">
+        <div className="modal-body p-4 md:p-6 overflow-y-auto flex-grow scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
           {children}
         </div>
 
         {/* Modal Footer */}
         {footerContent && (
-          <div className="modal-footer p-4 border-t border-gray-700 bg-gray-800">
+          <div className="modal-footer p-4 border-t border-gray-200 bg-white">
             {footerContent}
           </div>
         )}

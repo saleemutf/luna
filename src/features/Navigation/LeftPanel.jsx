@@ -141,7 +141,7 @@ const LeftPanel = ({
       <Logo />
       <QuickActions onSearchClick={onSearchClick} onNewChatClick={handleNewChatClick} />
 
-      <NavSection title="My Leave Scenarios" onAddItem={onAddMyLeaveScenario} initiallyOpen={true}>
+      <NavSection title="My Leave Scenarios" onAddItem={onAddMyLeaveScenario} initiallyOpen={true} allowCollapse={false}>
         {myLeaveScenariosData.items.map(item => (
           <NavSubMenuItem 
             key={item.id} 
@@ -155,7 +155,7 @@ const LeftPanel = ({
         <MoreLinkWithPopup popupTitle="My Leave Scenarios History" sections={myLeaveScenariosData.morePopupSections} onItemClick={handleMoreItemClick} />
       </NavSection>
 
-      <NavSection title="My Leave Requests" onAddItem={onAddMyLeaveRequest} initiallyOpen={true}>
+      <NavSection title="My Leave Requests" onAddItem={onAddMyLeaveRequest} initiallyOpen={true} allowCollapse={false}>
         {myLeaveRequestsData.items.map(item => (
           <NavSubMenuItem 
             key={item.id} 
@@ -168,7 +168,7 @@ const LeftPanel = ({
         <MoreLinkWithPopup popupTitle="My Leave Requests History" sections={myLeaveRequestsData.morePopupSections} onItemClick={handleMoreItemClick} />
       </NavSection>
       
-      <NavSection title="Model Leave Scenarios" onAddItem={onAddModelLeaveScenario} initiallyOpen={false}>
+      <NavSection title="Model Leave Scenarios" onAddItem={onAddModelLeaveScenario} initiallyOpen={true} allowCollapse={false}>
         {modelLeaveScenariosData.items.map(item => (
           <NavSubMenuItem 
             key={item.id} 
