@@ -96,7 +96,7 @@ function App() {
   };
 
   return (
-    <div className="flex h-screen font-sans bg-gray-100 overflow-hidden"> 
+    <div className="flex h-screen font-sans bg-white overflow-hidden"> 
       {showListeningUI && <ListeningUI />}
       {showVoiceWave && <VoiceWaveOverlay />}
       

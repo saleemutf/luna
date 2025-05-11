@@ -18,7 +18,7 @@ const Logo = () => {
             className="max-w-[120px] h-auto md:max-w-[150px]" // Responsive max-width
           />
         </div>
-        <div className="system-text text-center text-xs text-gray-400 font-medium">
+        <div className="system-text text-center text-xs text-gray-600 font-medium">
           Leave Management System
         </div>
       </a>

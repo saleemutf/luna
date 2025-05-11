@@ -114,21 +114,21 @@ const LeftPanel = ({
 
   if (collapsed) {
     return (
-      <div className="left-panel collapsed w-16 bg-gray-800 text-white p-3 flex flex-col h-full transition-all duration-300 shadow-lg">
+      <div className="left-panel collapsed w-16 bg-white text-gray-800 p-3 flex flex-col h-full transition-all duration-300 shadow-lg border-r">
         <div className="logo-container mb-4">
           <a href="/" title="LUNA Home">
             <img src={"/images/davavo_logo.png"} alt="LUNA" style={{ maxWidth: '32px', height: 'auto' }} />
           </a>
         </div>
-        <button onClick={onSearchClick} title="Search (⌘K)" className="p-2.5 hover:bg-gray-700 rounded-md cursor-pointer mb-2 focus:outline-none">
-            <i className="fas fa-search"></i>
+        <button onClick={onSearchClick} title="Search (⌘K)" className="p-2.5 hover:bg-gray-100 rounded-md cursor-pointer mb-2 focus:outline-none">
+            <i className="fas fa-search text-gray-800"></i>
         </button>
-        <button onClick={handleNewChatClick} title="New Chat" className="p-2.5 hover:bg-gray-700 rounded-md cursor-pointer mb-2 focus:outline-none">
-            <i className="fa-brands fa-rocketchat"></i>
+        <button onClick={handleNewChatClick} title="New Chat" className="p-2.5 hover:bg-gray-100 rounded-md cursor-pointer mb-2 focus:outline-none">
+            <i className="fa-brands fa-rocketchat text-gray-800"></i>
         </button>
         {/* Placeholder icons for other sections when collapsed */}
         <div className="mt-auto">
-            <button onClick={handleLogout} title="Logout" className="p-2.5 hover:bg-gray-700 rounded-md cursor-pointer focus:outline-none">
+            <button onClick={handleLogout} title="Logout" className="p-2.5 hover:bg-gray-100 rounded-md cursor-pointer focus:outline-none">
                 <i className="fas fa-sign-out-alt"></i>
             </button>
         </div>
@@ -137,7 +137,7 @@ const LeftPanel = ({
   }
 
   return (
-    <div className="left-panel w-72 bg-gray-800 text-white p-4 flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-gray-800 transition-all duration-300 shadow-xl">
+    <div className="left-panel w-72 bg-white text-gray-800 p-4 flex flex-col h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 transition-all duration-300 shadow-md border-r">
       <Logo />
       <QuickActions onSearchClick={onSearchClick} onNewChatClick={handleNewChatClick} />
 
@@ -208,14 +208,14 @@ const LeftPanel = ({
       </NavSection>
 
       {/* Static History Section in Sidebar */}
-      <div className="element mt-4 pt-4 border-t border-gray-700">
-        <div className="history-heading text-sm font-semibold text-gray-300 mb-3 px-2">History</div>
+      <div className="element mt-4 pt-4 border-t border-gray-200">
+        <div className="history-heading text-sm font-semibold text-gray-800 mb-3 px-2">History</div>
         <HistorySidebarSection title="Today" items={sidebarHistory.today} onItemClick={handleSidebarHistoryItemClick} />
         <HistorySidebarSection title="Previous 7 Days" items={sidebarHistory.prev7Days} onItemClick={handleSidebarHistoryItemClick} />
         <HistorySidebarSection title="Older" items={sidebarHistory.older} onItemClick={handleSidebarHistoryItemClick} />
       </div>
 
-      <div className="mt-auto sticky bottom-0 bg-gray-800 pt-3 pb-2 px-1">
+      <div className="mt-auto sticky bottom-0 bg-white pt-3 pb-2 px-1">
         <SettingsMenu />
         <LogoutButton onLogout={handleLogout} />
       </div>

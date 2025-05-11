@@ -65,44 +65,44 @@ const NavSubMenuItem = ({
   }, [dropdownRef]);
 
   return (
-    <div className={`submenu-item group relative flex justify-between items-center py-1.5 px-2 rounded-md hover:bg-gray-650 text-xs mb-0.5 transition-colors duration-150 ${isLocked ? 'text-gray-500 cursor-not-allowed' : 'text-gray-300'}`}>
-      <a href={isLocked ? undefined : href} className={`nav-itemx flex-grow hover:text-white ${isLocked ? 'pointer-events-none' : ''}`}>
+    <div className={`submenu-item group relative flex justify-between items-center py-1.5 px-2 rounded-md hover:bg-gray-50 text-xs mb-0.5 transition-colors duration-150 ${isLocked ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700'}`}>
+      <a href={isLocked ? undefined : href} className={`nav-itemx flex-grow hover:text-gray-900 ${isLocked ? 'pointer-events-none' : ''}`}>
         {title}
       </a>
       {dropdownItems.length > 0 && (
         <button 
             onClick={handleToggleDropdown} 
-            className="three-dots cursor-pointer p-1 opacity-0 group-hover:opacity-100 hover:text-white focus:opacity-100 focus:outline-none transition-opacity duration-150"
+            className="three-dots cursor-pointer p-1 opacity-0 group-hover:opacity-100 hover:text-gray-900 focus:opacity-100 focus:outline-none transition-opacity duration-150"
             aria-haspopup="true"
             aria-expanded={dropdownOpen}
             title="More actions"
         >
-          <i className="fas fa-ellipsis-h text-gray-400"></i>
+          <i className="fas fa-ellipsis-h text-gray-600"></i>
         </button>
       )}
       
       {dropdownOpen && dropdownItems.length > 0 && (
         <div 
             ref={dropdownRef} 
-            className="dropdown-menu absolute right-0 top-full mt-1 w-48 bg-gray-750 rounded-md shadow-xl z-20 py-1 border border-gray-700"
+            className="dropdown-menu absolute right-0 top-full mt-1 w-48 bg-white rounded-md shadow-xl z-20 py-1 border border-gray-200"
             role="menu"
         >
           {dropdownItems.map((item, index) => (
-            <div // Changed from div to button if it's an action item, or li for semantics
+            <div
               key={index} 
               ref={item.isShareTrigger ? shareTriggerRef : null}
-              className="dropdown-item-wrapper relative" // Wrapper for positioning ShareSubmenu
+              className="dropdown-item-wrapper relative"
               role="menuitem"
             >
               <button
-                className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-gray-600 cursor-pointer text-gray-300 hover:text-white text-xs focus:outline-none focus:bg-gray-600"
+                className="w-full flex items-center justify-between px-3 py-1.5 hover:bg-gray-100 cursor-pointer text-gray-700 hover:text-gray-900 text-xs focus:outline-none focus:bg-gray-100"
                 onClick={(e) => item.isShareTrigger ? handleToggleShareSubmenu(e, item) : handleItemAction(e, item.action)}
               >
                 <span className="flex items-center">
-                  {item.icon && <i className={`${item.icon} mr-2.5 w-4 text-center text-gray-400`}></i>}
+                  {item.icon && <i className={`${item.icon} mr-2.5 w-4 text-center text-gray-600`}></i>}
                   {item.label}
                 </span>
-                {item.isShareTrigger && <i className="fas fa-chevron-right text-gray-500 text-[10px]"></i>}
+                {item.isShareTrigger && <i className="fas fa-chevron-right text-gray-400 text-[10px]"></i>}
               </button>
 
               {item.isShareTrigger && shareSubmenuOpen && (
