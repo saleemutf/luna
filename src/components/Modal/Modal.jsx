@@ -49,7 +49,7 @@ const Modal = ({ isOpen, onClose, title, children, footerContent, size = 'md' })
             <h3 id="modal-title" className="text-lg font-semibold text-gray-800">{title}</h3>
             <button 
               onClick={onClose} 
-              className="text-gray-500 hover:text-gray-700 transition-colors p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="text-gray-500 hover:text-[#90a955] transition-colors p-1 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-[#90a955]"
               aria-label="Close modal"
             >
               <i className="fas fa-times text-xl"></i>
@@ -58,7 +58,7 @@ const Modal = ({ isOpen, onClose, title, children, footerContent, size = 'md' })
         )}
         
         {/* Modal Body */}
-        <div className="modal-body p-4 md:p-6 overflow-y-auto flex-grow scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+        <div className="modal-body p-4 md:p-6 overflow-y-auto flex-grow scrollbar-thin scrollbar-thumb-[#90a955] scrollbar-track-gray-100">
           {children}
         </div>
 

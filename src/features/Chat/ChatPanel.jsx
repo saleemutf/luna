@@ -101,7 +101,7 @@ const ChatPanel = () => {
   };
 
   return (
-    <div className="chat-panel flex flex-col flex-grow bg-white rounded-lg shadow-md overflow-hidden border border-gray-200">
+    <div className="chat-panel flex flex-col flex-grow bg-white rounded-lg shadow-md overflow-hidden">
       <div ref={chatContainerRef} className="chat-messages flex-grow p-4 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
         {messages.map(msg => (
           <Message 

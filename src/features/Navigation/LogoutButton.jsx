@@ -15,7 +15,7 @@ const LogoutButton = ({ onLogout }) => {
   return (
     <button 
       onClick={handleLogout}
-      className="logout-btn bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white p-2.5 rounded-md text-sm w-full flex items-center justify-center gap-2 mt-4 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50 transition-all duration-150 ease-in-out shadow-md hover:shadow-lg"
+      className="logout-btn bg-gradient-to-r from-[#90a955] to-[#7c9346] hover:from-[#7c9346] hover:to-[#6b8039] text-white p-2.5 rounded-md text-sm w-full flex items-center justify-center gap-2 mt-4 focus:outline-none focus:ring-2 focus:ring-[#90a955] focus:ring-opacity-50 transition-all duration-150 ease-in-out shadow-md hover:shadow-lg"
     >
       <i className="fas fa-sign-out-alt"></i>
       <span>Logout</span>

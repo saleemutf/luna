@@ -53,7 +53,7 @@ const CreateItemModal = ({
         type="button"
         onClick={onClose} 
         disabled={loading}
-        className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 transition-colors disabled:opacity-50"
+        className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-[#90a955] transition-colors disabled:opacity-50"
       >
         Close
       </button>
@@ -61,7 +61,7 @@ const CreateItemModal = ({
         type="button"
         onClick={handleCreate} 
         disabled={loading}
-        className="px-4 py-2 text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-2 text-sm font-medium text-white bg-[#90a955] hover:bg-[#7c9346] rounded-md focus:outline-none focus:ring-2 focus:ring-[#90a955] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {loading ? (
             <i className="fas fa-spinner fa-spin mr-2"></i>
@@ -91,7 +91,7 @@ const CreateItemModal = ({
             }
           }}
           placeholder={inputPlaceholder || "Enter name..."} 
-          className={`w-full p-2.5 bg-white border text-gray-800 rounded-md focus:outline-none focus:ring-2 placeholder-gray-400 ${error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-purple-500'}`}
+          className={`w-full p-2.5 bg-white border text-gray-800 rounded-md focus:outline-none focus:ring-2 placeholder-gray-400 ${error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-[#90a955]'}`}
         />
         {error && <p className="text-red-500 text-xs mt-1.5">{error}</p>}
       </div>

@@ -6,7 +6,7 @@ const SearchResultItem = ({ icon, text, onClick }) => (
     className="search-result flex items-center p-2.5 hover:bg-gray-100 rounded-md cursor-pointer transition-colors duration-150"
     onClick={onClick}
   >
-    <i className={`${icon} text-purple-600 text-sm mr-3 w-5 text-center`}></i>
+    <i className={`${icon} text-[#90a955] text-sm mr-3 w-5 text-center`}></i>
     <span className="text-gray-700 text-sm truncate">{text}</span>
   </div>
 );
@@ -53,18 +53,18 @@ const SearchModal = ({ isOpen, onClose }) => {
 
   const customHeader = (
     <div className="flex items-center w-full bg-white py-2 px-3 md:px-4 border-b border-gray-200">
-      <i className="fas fa-search text-gray-400 text-base md:text-lg mr-2 md:mr-3"></i>
+      <i className="fas fa-search text-[#90a955] text-base md:text-lg mr-2 md:mr-3"></i>
       <input 
         ref={inputRef}
         type="text" 
-        className="flex-grow bg-transparent text-gray-800 text-sm md:text-base focus:outline-none placeholder-gray-400"
+        className="flex-grow bg-transparent text-gray-800 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-[#90a955] placeholder-gray-400"
         placeholder="Search leave requests, policies, or scenarios..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <button 
         onClick={onClose} 
-        className="text-gray-400 hover:text-gray-600 transition-colors p-1 ml-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-purple-500"
+        className="text-gray-400 hover:text-[#90a955] transition-colors p-1 ml-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-[#90a955]"
         aria-label="Close search modal"
       >
         <i className="fas fa-times text-lg md:text-xl"></i>
@@ -75,10 +75,10 @@ const SearchModal = ({ isOpen, onClose }) => {
   const customFooter = (
     <div className="flex items-center justify-center text-xs text-gray-500 py-2.5 px-4 bg-white border-t border-gray-200">
       <div className="search-shortcut">
-        <span className="key bg-gray-100 px-1.5 py-0.5 rounded-sm font-mono text-gray-700">⌘</span>
-        <span className="key bg-gray-100 px-1.5 py-0.5 rounded-sm font-mono ml-0.5 text-gray-700">K</span>
+        <span className="key bg-[#90a955] bg-opacity-10 px-1.5 py-0.5 rounded-sm font-mono text-[#90a955]">⌘</span>
+        <span className="key bg-[#90a955] bg-opacity-10 px-1.5 py-0.5 rounded-sm font-mono ml-0.5 text-[#90a955]">K</span>
         <span className="ml-1.5 text-gray-600">to open,</span>
-        <span className="key bg-gray-100 px-1.5 py-0.5 rounded-sm font-mono ml-1.5 text-gray-700">ESC</span>
+        <span className="key bg-[#90a955] bg-opacity-10 px-1.5 py-0.5 rounded-sm font-mono ml-1.5 text-[#90a955]">ESC</span>
         <span className="ml-1.5 text-gray-600">to close</span>
       </div>
     </div>
@@ -87,7 +87,7 @@ const SearchModal = ({ isOpen, onClose }) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={null} size="lg"> 
       {customHeader}
-      <div className="search-modal-body py-3 px-2 min-h-[200px] max-h-[calc(80vh-120px)] md:max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+      <div className="search-modal-body py-3 px-2 min-h-[200px] max-h-[calc(80vh-120px)] md:max-h-[60vh] overflow-y-auto scrollbar-thin scrollbar-thumb-[#90a955] scrollbar-track-gray-100">
         {itemsToDisplay.length > 0 ? (
           itemsToDisplay.map(item => (
             <SearchResultItem 
