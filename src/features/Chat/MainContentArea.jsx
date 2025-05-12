@@ -1,8 +1,12 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import ChatPanel from './ChatPanel'; // Import actual ChatPanel
 import DetailsPanel from './DetailsPanel'; // Import actual DetailsPanel
 
 const MainContentArea = ({ onTogglePanel, leftPanelCollapsed }) => {
+  const location = useLocation();
+  const shouldShowHeading = location.pathname !== '/my-leave-requests/pl2';
+
   return (
     <div className="main-content-area flex-grow bg-white p-4 flex relative transition-all duration-300">
       <button 
@@ -15,9 +19,11 @@ const MainContentArea = ({ onTogglePanel, leftPanelCollapsed }) => {
       </button>
       
       <div className={`flex flex-col w-full transition-all duration-300 ${leftPanelCollapsed ? 'ml-0' : 'ml-6'}`}>
-        <h1 className="chat-heading text-xl font-semibold text-gray-700 mb-4 px-1">
-          How can I help you?
-        </h1>
+        {shouldShowHeading && (
+          <h1 className="chat-heading text-xl font-semibold text-gray-700 mb-4 px-1">
+            How can I help you?
+          </h1>
+        )}
         
         <div className="flex flex-row flex-grow overflow-hidden">
             <ChatPanel />

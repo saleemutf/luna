@@ -1,41 +1,54 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Message from './Message'; // Import new Message component
 import ChatInput from './ChatInput'; // Import new ChatInput component
 
 const ChatPanel = () => {
-  // Sample messages - will be managed by state / context / API calls
-  // The initial message structure is taken from the original newChat.html, lines 1288-1327
-  const [messages, setMessages] = useState([
-    {
-      id: 'welcome-msg',
-      text: `👋 Welcome back! I noticed a few things to bring to your attention:<br><br>
-            <div class="py-3 px-4 bg-purple-500/10 rounded-lg mb-3">
-                <strong class="font-semibold text-purple-700">Previous Leave Discussion</strong><br>
-                <span class="text-sm text-gray-700">You were discussing taking annual leave from July 15th to July 20th. Would you like to proceed with this application?</span>
-            </div>
-            <div class="py-3 px-4 bg-blue-500/10 rounded-lg mb-3">
-                <strong class="font-semibold text-blue-700">Upcoming Leave</strong><br>
-                <span class="text-sm text-gray-700">You have scheduled leave for August 5th to August 7th. Would you like to review or modify this?</span>
-            </div>
-            <div class="mt-4 text-sm text-gray-600">
-                I can also help you with:
-            </div>`,
-      isUser: false,
-      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      quickReplies: [
-        { label: 'Yes, apply for this leave', action: 'apply_previous_leave', icon: 'fas fa-check-circle'},
-        { label: 'No, discard this', action: 'discard_previous_leave', icon: 'fas fa-times-circle'},
-        { label: 'Review leave details', action: 'review_upcoming_leave', icon: 'fas fa-eye'},
-        // Adding other general quick replies from the HTML example
-        { label: 'Check leave balance', action: 'check_balance', icon: 'fas fa-calendar-check' },
-        { label: 'Apply for new leave', action: 'apply_new_leave', icon: 'fas fa-plane-departure' },
-        { label: 'View leave policies', action: 'view_policies', icon: 'fas fa-book' },
-        { label: 'Track requests', action: 'track_requests', icon: 'fas fa-list-check' },
-      ]
-    },
-  ]);
+  const location = useLocation();
+  
+  // Initial welcome message
+  const welcomeMessage = {
+    id: 'welcome-msg',
+    text: `👋 Welcome back! I noticed a few things to bring to your attention:<br><br>
+          <div class="py-3 px-4 bg-purple-500/10 rounded-lg mb-3">
+              <strong class="font-semibold text-purple-700">Previous Leave Discussion</strong><br>
+              <span class="text-sm text-gray-700">You were discussing taking annual leave from July 15th to July 20th. Would you like to proceed with this application?</span>
+          </div>
+          <div class="py-3 px-4 bg-blue-500/10 rounded-lg mb-3">
+              <strong class="font-semibold text-blue-700">Upcoming Leave</strong><br>
+              <span class="text-sm text-gray-700">You have scheduled leave for August 5th to August 7th. Would you like to review or modify this?</span>
+          </div>
+          <div class="mt-4 text-sm text-gray-600">
+              I can also help you with:
+          </div>`,
+    isUser: false,
+    timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    quickReplies: [
+      { label: 'Yes, apply for this leave', action: 'apply_previous_leave', icon: 'fas fa-check-circle'},
+      { label: 'No, discard this', action: 'discard_previous_leave', icon: 'fas fa-times-circle'},
+      { label: 'Review leave details', action: 'review_upcoming_leave', icon: 'fas fa-eye'},
+      // Adding other general quick replies from the HTML example
+      { label: 'Check leave balance', action: 'check_balance', icon: 'fas fa-calendar-check' },
+      { label: 'Apply for new leave', action: 'apply_new_leave', icon: 'fas fa-plane-departure' },
+      { label: 'View leave policies', action: 'view_policies', icon: 'fas fa-book' },
+      { label: 'Track requests', action: 'track_requests', icon: 'fas fa-list-check' },
+    ]
+  };
+
+  // Initialize messages state with welcome message
+  const [messages, setMessages] = useState([welcomeMessage]);
   const chatContainerRef = useRef(null);
-  const [isVoiceRecording, setIsVoiceRecording] = useState(false); // Example state for voice input
+  const [isVoiceRecording, setIsVoiceRecording] = useState(false);
+
+  // Effect to clear messages only for specific URL
+  useEffect(() => {
+    if (location.pathname === '/my-leave-requests/pl2') {
+      setMessages([]);
+    } else if (messages.length === 0) {
+      // Restore welcome message when navigating away from pl2
+      setMessages([welcomeMessage]);
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     if (chatContainerRef.current) {

@@ -41,8 +41,8 @@ const LeftPanel = ({
   const myLeaveRequestsData = {
     items: [
       { id: 'mlr1', title: 'PL1 on Apr 25', href: '/my-leave-requests/pl1' },
-      { id: 'mlr2', title: 'PL2 on Apr 25' },
-      { id: 'mlr3', title: 'PL3 on Apr 25' },
+      { id: 'mlr2', title: 'PL2 on Apr 25',href: '/my-leave-requests/pl2' },
+      { id: 'mlr3', title: 'PL3 on Apr 25',href: '/my-leave-requests/pl3' },
     ],
     morePopupSections: [
         { title: 'Today', items: [{ id:'lr_th1', title: 'PL11 on Apr 25', icon: 'fas fa-calendar', meta: '2:30 PM' }] },
