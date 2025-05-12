@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import './App.css'; // Keep for now, might prune later
 
 import LeftPanel from './features/Navigation/LeftPanel';
 import MainContentArea from './features/Chat/MainContentArea';
 import SearchModal from './features/Search/SearchModal';
 import CreateItemModal from './components/Modal/CreateItemModal'; // Import CreateItemModal
-import ChatInterface from './components/ChatInterface';
+import ChatInterface from './features/chat/ChatInterface';
+import LeavePanel from './features/chat/LeavePanel';
 // import ListeningUI from './features/Chat/ListeningUI';
 // import VoiceWaveOverlay from './features/Chat/VoiceWaveOverlay';
 // import SearchModal from './features/Search/SearchModal';
@@ -63,6 +64,7 @@ function App() {
   const [showVoiceWave, setShowVoiceWave] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
   const [showVoicePromptModal, setShowVoicePromptModal] = useState(false);
+  const [messages, setMessages] = useState([]);
 
   // States for Create Modals
   const [showCreateScenarioModal, setShowCreateScenarioModal] = useState(false);
@@ -117,34 +119,31 @@ function App() {
 
   return (
     <Router>
-      <div className="flex h-screen font-sans bg-white overflow-hidden"> 
-        {showListeningUI && <ListeningUI />}
-        {showVoiceWave && <VoiceWaveOverlay />}
-        
-        <LeftPanel 
-          collapsed={isLeftPanelCollapsed} 
-          onSearchClick={handleOpenSearchModal}
-          onAddMyLeaveScenario={() => setShowCreateScenarioModal(true)}
-          onAddMyLeaveRequest={() => setShowCreateRequestModal(true)}
-          onAddModelLeaveScenario={() => setShowCreateModelScenarioModal(true)}
-        />
-        
-        <Routes>
-          <Route 
-            path="*" 
-            element={
-              <MainContent 
-                leftPanelCollapsed={isLeftPanelCollapsed}
-                onTogglePanel={handleTogglePanel}
-              />
-            } 
-          />
-        </Routes>
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-[1920px] mx-auto h-screen flex">
+          <div className={`flex-shrink-0 ${isLeftPanelCollapsed ? 'w-16' : 'w-72'}`}>
+            <LeftPanel 
+              collapsed={isLeftPanelCollapsed}
+              onSearchClick={handleOpenSearchModal}
+              onAddMyLeaveScenario={() => setShowCreateScenarioModal(true)}
+              onAddMyLeaveRequest={() => setShowCreateRequestModal(true)}
+              onAddModelLeaveScenario={() => setShowCreateModelScenarioModal(true)}
+            />
+          </div>
+          
+          <div className="flex-1 flex gap-4 p-4 overflow-hidden">
+            <div className="flex-1">
+              <ChatInterface messages={messages} setMessages={setMessages} />
+            </div>
+            <div className="w-[400px] flex-shrink-0">
+              <LeavePanel messages={messages} />
+            </div>
+          </div>
+        </div>
 
+        {/* Modals */}
         <SearchModal isOpen={showSearchModal} onClose={() => setShowSearchModal(false)} />
-        {showVoicePromptModal && <VoicePromptModal onClose={() => setShowVoicePromptModal(false)} />}
-
-        {/* Create Modals using the reusable CreateItemModal */}
+        
         <CreateItemModal 
           isOpen={showCreateScenarioModal}
           onClose={() => setShowCreateScenarioModal(false)}
@@ -152,6 +151,7 @@ function App() {
           inputPlaceholder="Enter scenario name..."
           onCreate={handleCreateScenario}
         />
+        
         <CreateItemModal 
           isOpen={showCreateRequestModal}
           onClose={() => setShowCreateRequestModal(false)}
@@ -159,15 +159,14 @@ function App() {
           inputPlaceholder="Enter request name..."
           onCreate={handleCreateRequest}
         />
+        
         <CreateItemModal 
           isOpen={showCreateModelScenarioModal}
           onClose={() => setShowCreateModelScenarioModal(false)}
-          modalTitle="Create Model Leave Scenario" // Corrected title from original HTML
+          modalTitle="Create Model Leave Scenario"
           inputPlaceholder="Enter model leave scenario name..."
           onCreate={handleCreateModelScenario}
         />
-        
-        {/* TODO: Implement other modals: ListeningUI, VoiceWaveOverlay, VoicePromptModal, ShareModal */}
       </div>
     </Router>
   );
