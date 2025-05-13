@@ -19,7 +19,7 @@ const Logo = () => {
           />
         </div>
         <div className="system-text text-center text-xs text-gray-600 font-medium">
-          Leave Management System
+          Luna Leave Management
         </div>
       </a>
     </div>

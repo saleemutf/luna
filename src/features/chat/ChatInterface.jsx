@@ -101,23 +101,13 @@ const ChatInterface = ({ messages, setMessages }) => {
 
   return (
     <div className="flex flex-col h-full bg-white rounded-lg shadow-sm">
-      <div className="flex items-center justify-between p-4 border-b">
-        <div className="text-lg font-semibold">Leave Assistant</div>
-        <button
-          onClick={handleResetChat}
-          className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
-        >
-          New Chat
-        </button>
-      </div>
-
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message, index) => (
           <div
             key={`${index}-${message.type}`}
             className={`max-w-[80%] p-3 rounded-xl ${
               message.type === 'user'
-                ? 'ml-auto bg-green-600 text-white rounded-br-none'
+                ? 'ml-auto bg-[#90a955] text-white rounded-br-none'
                 : 'bg-gray-100 rounded-bl-none'
             }`}
           >
@@ -138,14 +128,22 @@ const ChatInterface = ({ messages, setMessages }) => {
           onChange={(e) => setInputMessage(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Type your message here..."
-          className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+          className="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#90a955]"
         />
         <button
           onClick={handleSendMessage}
           disabled={!ws || status !== 'Connected'}
-          className="px-6 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700 disabled:bg-gray-400"
+          title="Send Message"
+          className="px-4 py-2 text-white bg-[#90a955] rounded-lg hover:bg-[#7c9346] disabled:bg-gray-400"
         >
-          Send
+          <i className="fas fa-paper-plane"></i>
+        </button>
+        <button
+          onClick={handleResetChat}
+          title="New Chat"
+          className="px-4 py-2 text-white bg-[#90a955] rounded-lg hover:bg-[#7c9346] disabled:bg-gray-400"
+        >
+          <i className="fas fa-rotate"></i>
         </button>
       </div>
 
