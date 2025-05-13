@@ -5,7 +5,6 @@ const ChatInterface = ({ messages, setMessages }) => {
   const [status, setStatus] = useState('Disconnected');
   const [ws, setWs] = useState(null);
   const messagesEndRef = useRef(null);
-  const currentAssistantMessage = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -24,24 +23,29 @@ const ChatInterface = ({ messages, setMessages }) => {
     };
 
     websocket.onmessage = (event) => {
-      if (event.data === "\n[END]\n") {
-        currentAssistantMessage.current = null;
+      const data = event.data;
+      
+      // Ignore response time messages
+      if (data.includes("[Response time:") || data === "\n[END]\n") {
         return;
       }
 
+      // Add the assistant's message
       setMessages(prevMessages => {
-        const newMessages = [...prevMessages];
-        if (!currentAssistantMessage.current) {
-          currentAssistantMessage.current = {
-            type: 'assistant',
-            content: event.data
+        const lastMessage = prevMessages[prevMessages.length - 1];
+        
+        // If the last message is from the assistant, append to it
+        if (lastMessage?.type === 'assistant') {
+          const updatedMessages = [...prevMessages];
+          updatedMessages[updatedMessages.length - 1] = {
+            ...lastMessage,
+            content: lastMessage.content + data
           };
-          newMessages.push(currentAssistantMessage.current);
-        } else {
-          currentAssistantMessage.current.content += event.data;
-          newMessages[newMessages.length - 1] = { ...currentAssistantMessage.current };
+          return updatedMessages;
         }
-        return newMessages;
+        
+        // Otherwise, create a new assistant message
+        return [...prevMessages, { type: 'assistant', content: data }];
       });
     };
 
@@ -64,7 +68,8 @@ const ChatInterface = ({ messages, setMessages }) => {
   const handleSendMessage = () => {
     if (!inputMessage.trim() || !ws) return;
 
-    setMessages(prev => [...prev, { type: 'user', content: inputMessage }]);
+    const userMessage = { type: 'user', content: inputMessage };
+    setMessages(prev => [...prev, userMessage]);
     ws.send(inputMessage);
     setInputMessage('');
   };
@@ -98,7 +103,7 @@ const ChatInterface = ({ messages, setMessages }) => {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message, index) => (
           <div
-            key={index}
+            key={`${index}-${message.type}`}
             className={`max-w-[80%] p-3 rounded-xl ${
               message.type === 'user'
                 ? 'ml-auto bg-green-600 text-white rounded-br-none'

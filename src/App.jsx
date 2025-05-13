@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css'; // Keep for now, might prune later
 
 import LeftPanel from './features/Navigation/LeftPanel';
@@ -58,19 +58,17 @@ const MainContent = ({ leftPanelCollapsed, onTogglePanel }) => {
   );
 };
 
-function App() {
+// Layout wrapper component to handle conditional rendering
+const AppLayout = () => {
   const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(false);
-  const [showListeningUI, setShowListeningUI] = useState(false);
-  const [showVoiceWave, setShowVoiceWave] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
-  const [showVoicePromptModal, setShowVoicePromptModal] = useState(false);
   const [messages, setMessages] = useState([]);
-
-  // States for Create Modals
   const [showCreateScenarioModal, setShowCreateScenarioModal] = useState(false);
   const [showCreateRequestModal, setShowCreateRequestModal] = useState(false);
   const [showCreateModelScenarioModal, setShowCreateModelScenarioModal] = useState(false);
-  // TODO: Add state for the main ShareModal (from original HTML, separate from NavSubMenuItem share)
+  
+  const location = useLocation();
+  const isLeaveRequestsPage = location.pathname.includes('my-leave-requests');
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -78,7 +76,6 @@ function App() {
     link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
     document.head.appendChild(link);
 
-    // Keyboard shortcut for Search Modal (Cmd+K or Ctrl+K)
     const handleKeyDown = (event) => {
       if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
         event.preventDefault();
@@ -93,32 +90,31 @@ function App() {
     };
   }, []);
 
-  const handleTogglePanel = () => {
-    setIsLeftPanelCollapsed(!isLeftPanelCollapsed);
-  };
-
-  // Handler to open search modal (will be passed to LeftPanel)
   const handleOpenSearchModal = () => {
     setShowSearchModal(true);
   };
 
-  // Handlers for creating items
   const handleCreateScenario = (name) => {
     console.log('Creating My Leave Scenario:', name);
-    // TODO: Add logic to update scenarios list (e.g., in LeftPanel's data or via context/API)
-    setShowCreateScenarioModal(false); // Close modal on successful creation
+    setShowCreateScenarioModal(false);
   };
+
   const handleCreateRequest = (name) => {
     console.log('Creating My Leave Request:', name);
     setShowCreateRequestModal(false);
   };
+
   const handleCreateModelScenario = (name) => {
     console.log('Creating Model Leave Scenario:', name);
     setShowCreateModelScenarioModal(false);
   };
 
-  return (
-    <Router>
+  const handleTogglePanel = () => {
+    setIsLeftPanelCollapsed(!isLeftPanelCollapsed);
+  };
+
+  if (isLeaveRequestsPage) {
+    return (
       <div className="min-h-screen bg-gray-50">
         <div className="max-w-[1920px] mx-auto h-screen flex">
           <div className={`flex-shrink-0 ${isLeftPanelCollapsed ? 'w-16' : 'w-72'}`}>
@@ -136,14 +132,13 @@ function App() {
               <ChatInterface messages={messages} setMessages={setMessages} />
             </div>
             <div className="w-[400px] flex-shrink-0">
-              <LeavePanel messages={messages} />
+              {/* <LeavePanel messages={messages} /> */}
             </div>
           </div>
         </div>
 
         {/* Modals */}
         <SearchModal isOpen={showSearchModal} onClose={() => setShowSearchModal(false)} />
-        
         <CreateItemModal 
           isOpen={showCreateScenarioModal}
           onClose={() => setShowCreateScenarioModal(false)}
@@ -151,7 +146,6 @@ function App() {
           inputPlaceholder="Enter scenario name..."
           onCreate={handleCreateScenario}
         />
-        
         <CreateItemModal 
           isOpen={showCreateRequestModal}
           onClose={() => setShowCreateRequestModal(false)}
@@ -159,7 +153,6 @@ function App() {
           inputPlaceholder="Enter request name..."
           onCreate={handleCreateRequest}
         />
-        
         <CreateItemModal 
           isOpen={showCreateModelScenarioModal}
           onClose={() => setShowCreateModelScenarioModal(false)}
@@ -168,6 +161,60 @@ function App() {
           onCreate={handleCreateModelScenario}
         />
       </div>
+    );
+  }
+
+  // Original layout for other routes
+  return (
+    <div className="flex h-screen font-sans bg-white overflow-hidden">
+      <LeftPanel 
+        collapsed={isLeftPanelCollapsed}
+        onSearchClick={handleOpenSearchModal}
+        onAddMyLeaveScenario={() => setShowCreateScenarioModal(true)}
+        onAddMyLeaveRequest={() => setShowCreateRequestModal(true)}
+        onAddModelLeaveScenario={() => setShowCreateModelScenarioModal(true)}
+      />
+      
+      <MainContentArea 
+        leftPanelCollapsed={isLeftPanelCollapsed}
+        onTogglePanel={handleTogglePanel}
+      />
+
+      <SearchModal isOpen={showSearchModal} onClose={() => setShowSearchModal(false)} />
+      
+      <CreateItemModal 
+        isOpen={showCreateScenarioModal}
+        onClose={() => setShowCreateScenarioModal(false)}
+        modalTitle="Create My Leave Scenario"
+        inputPlaceholder="Enter scenario name..."
+        onCreate={handleCreateScenario}
+      />
+      
+      <CreateItemModal 
+        isOpen={showCreateRequestModal}
+        onClose={() => setShowCreateRequestModal(false)}
+        modalTitle="Create My Leave Request"
+        inputPlaceholder="Enter request name..."
+        onCreate={handleCreateRequest}
+      />
+      
+      <CreateItemModal 
+        isOpen={showCreateModelScenarioModal}
+        onClose={() => setShowCreateModelScenarioModal(false)}
+        modalTitle="Create Model Leave Scenario"
+        inputPlaceholder="Enter model leave scenario name..."
+        onCreate={handleCreateModelScenario}
+      />
+    </div>
+  );
+};
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="*" element={<AppLayout />} />
+      </Routes>
     </Router>
   );
 }

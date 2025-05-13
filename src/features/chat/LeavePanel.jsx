@@ -96,7 +96,7 @@ const LeavePanel = ({ messages }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className="bg-white rounded-lg shadow-sm p-6 hidden">
       <div className="text-xl font-semibold mb-6">Leave Overview</div>
       
       <div className="grid grid-cols-2 gap-4 mb-8">
