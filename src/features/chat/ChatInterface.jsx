@@ -99,6 +99,21 @@ const ChatInterface = ({ messages, setMessages }) => {
     }
   };
 
+  const handleSaveChat = () => {
+    if (!messages.length) return;
+    
+    const savedChats = JSON.parse(localStorage.getItem('savedChats') || '[]');
+    const newChat = {
+      id: Date.now(),
+      title: new Date().toLocaleString(),
+      messages: messages,
+      createdAt: new Date().toISOString()
+    };
+    
+    savedChats.push(newChat);
+    localStorage.setItem('savedChats', JSON.stringify(savedChats));
+  };
+
   return (
     <div className="flex flex-col h-full bg-white rounded-lg shadow-sm">
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -137,6 +152,14 @@ const ChatInterface = ({ messages, setMessages }) => {
           className="px-4 py-2 text-white bg-[#90a955] rounded-lg hover:bg-[#7c9346] disabled:bg-gray-400"
         >
           <i className="fas fa-paper-plane"></i>
+        </button>
+        <button
+          onClick={handleSaveChat}
+          disabled={!messages.length}
+          title="Save Chat"
+          className="px-4 py-2 text-white bg-[#90a955] rounded-lg hover:bg-[#7c9346] disabled:bg-gray-400"
+        >
+          <i className="fas fa-save"></i>
         </button>
         <button
           onClick={handleResetChat}

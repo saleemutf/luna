@@ -41,9 +41,8 @@ const CreateModelScenarioModal = () => null;
 const ShareModal = () => null;
 
 // MainContent wrapper component to handle conditional rendering
-const MainContent = ({ leftPanelCollapsed, onTogglePanel }) => {
+const MainContent = ({ leftPanelCollapsed, onTogglePanel, messages, setMessages }) => {
   const location = useLocation();
-  const [messages, setMessages] = useState([]);
   
   // Show ChatInterface on the landing page and my-leave-requests route
   if (location.pathname === '/' || location.pathname.includes('my-leave-requests')) {
@@ -75,6 +74,7 @@ const AppLayout = () => {
   const [showCreateScenarioModal, setShowCreateScenarioModal] = useState(false);
   const [showCreateRequestModal, setShowCreateRequestModal] = useState(false);
   const [showCreateModelScenarioModal, setShowCreateModelScenarioModal] = useState(false);
+  const [messages, setMessages] = useState([]);
   
   const location = useLocation();
 
@@ -131,12 +131,15 @@ const AppLayout = () => {
             onAddMyLeaveScenario={() => setShowCreateScenarioModal(true)}
             onAddMyLeaveRequest={() => setShowCreateRequestModal(true)}
             onAddModelLeaveScenario={() => setShowCreateModelScenarioModal(true)}
+            setMessages={setMessages}
           />
         </div>
         
         <MainContent 
           leftPanelCollapsed={isLeftPanelCollapsed}
           onTogglePanel={handleTogglePanel}
+          messages={messages}
+          setMessages={setMessages}
         />
       </div>
 

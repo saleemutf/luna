@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 import QuickActions from './QuickActions';
 import NavSection from './NavSection';
@@ -7,14 +8,18 @@ import MoreLinkWithPopup from './MoreLinkWithPopup';
 import HistorySidebarSection from './HistorySidebarSection';
 import SettingsMenu from './SettingsMenu';
 import LogoutButton from './LogoutButton';
+import useSavedChats from '../../hooks/useSavedChats';
 
 const LeftPanel = ({ 
     collapsed, 
     onSearchClick, 
     onAddMyLeaveScenario, 
     onAddMyLeaveRequest, 
-    onAddModelLeaveScenario 
+    onAddModelLeaveScenario,
+    setMessages
 }) => {
+  const navigate = useNavigate();
+  const { groupedChats, deleteChat } = useSavedChats();
 
   // TODO: Move data to a more appropriate place (e.g., context, props, or state management solution, or fetch from API)
   // Sample data for My Leave Scenarios
@@ -103,14 +108,24 @@ const LeftPanel = ({
 
   // Handlers for QuickActions (to be implemented, e.g., show modals)
   const handleNewChatClick = () => {
-    window.location.href = '/';
+    navigate('/', { replace: true });
   };
 
   // Handlers for MorePopup item click
   const handleMoreItemClick = (item) => console.log('More item clicked:', item.title);
 
   // Handler for static history item click
-  const handleSidebarHistoryItemClick = (item) => console.log('Sidebar history item clicked:', item.title);
+  const handleSidebarHistoryItemClick = (item) => {
+    if (item.messages) {
+      setMessages(item.messages);
+      navigate('/', { replace: true });
+    }
+  };
+
+  const handleDeleteChat = (e, chatId) => {
+    e.stopPropagation();
+    deleteChat(chatId);
+  };
 
   // Logout handler
   const handleLogout = () => console.log('Logout requested');
@@ -215,10 +230,37 @@ const LeftPanel = ({
 
       {/* Static History Section in Sidebar */}
       <div className="element mt-4 pt-4 border-t border-gray-200">
-        <div className="history-heading text-sm font-semibold text-gray-800 mb-3 px-2">History</div>
-        <HistorySidebarSection title="Today" items={sidebarHistory.today} onItemClick={handleSidebarHistoryItemClick} />
-        <HistorySidebarSection title="Previous 7 Days" items={sidebarHistory.prev7Days} onItemClick={handleSidebarHistoryItemClick} />
-        <HistorySidebarSection title="Older" items={sidebarHistory.older} onItemClick={handleSidebarHistoryItemClick} />
+        <div className="history-heading text-sm font-semibold text-gray-800 mb-3 px-2">Chat History</div>
+        <HistorySidebarSection 
+          title="Today" 
+          items={groupedChats.today.map(chat => ({
+            id: chat.id,
+            title: chat.title,
+            messages: chat.messages,
+            onDelete: (e) => handleDeleteChat(e, chat.id)
+          }))} 
+          onItemClick={handleSidebarHistoryItemClick}
+        />
+        <HistorySidebarSection 
+          title="Previous 7 Days" 
+          items={groupedChats.prev7Days.map(chat => ({
+            id: chat.id,
+            title: chat.title,
+            messages: chat.messages,
+            onDelete: (e) => handleDeleteChat(e, chat.id)
+          }))} 
+          onItemClick={handleSidebarHistoryItemClick}
+        />
+        <HistorySidebarSection 
+          title="Older" 
+          items={groupedChats.older.map(chat => ({
+            id: chat.id,
+            title: chat.title,
+            messages: chat.messages,
+            onDelete: (e) => handleDeleteChat(e, chat.id)
+          }))} 
+          onItemClick={handleSidebarHistoryItemClick}
+        />
       </div>
 
       <NavSection title="Settings" initiallyOpen={false}>
