@@ -2,23 +2,33 @@
 
 A modern, intuitive chat-based interface for managing leave requests and scenarios. This application provides an interactive way to handle leave management through a conversational UI, making the process more engaging and user-friendly.
 
-## Features
+## 🚀 Features
 
 - 💬 Chat-based interface for leave management
 - 🔄 Real-time WebSocket communication
-- 💾 Save and manage chat history
-- 📱 Responsive design with modern UI
-- 🎨 Tailwind CSS for styling
-- ⚛️ Built with React and modern web technologies
+- 🎨 TailwindCSS for styling
+- ⚛️ Built with React and Vite
+- 🎯 Interactive UI components
 
-## Prerequisites
+
+
+## 🛠️ Technology Stack
+
+- **Frontend Framework:** React 18+
+- **Build Tool:** Vite
+- **Styling:** TailwindCSS
+- **Package Manager:** pnpm
+- **Code Quality:** ESLint
+- **Development Mode:** Development server with HMR
+
+## 📋 Prerequisites
 
 Before you begin, ensure you have the following installed:
 - Node.js (v16.0.0 or higher)
 - pnpm (v7.0.0 or higher)
 - A modern web browser
 
-## Installation
+## 🚀 Getting Started
 
 1. Clone the repository:
 ```bash
@@ -26,83 +36,83 @@ git clone https://github.com/your-username/DevavoUxUi.git
 cd DevavoUxUi
 ```
 
-2. Install dependencies using pnpm:
+2. Install dependencies:
 ```bash
 pnpm install
 ```
 
-## Configuration
-
-1. Configure the WebSocket connection:
-   - Open `src/features/chat/ChatInterface.jsx`
-   - Update the WebSocket URL if needed:
-     ```javascript
-     const websocket = new WebSocket('ws://localhost:8000/ws/chat');
-     ```
-
-2. Environment Variables (if needed):
-   - Create a `.env` file in the root directory
-   - Add any necessary environment variables:
-     ```
-     REACT_APP_API_URL=your_api_url
-     REACT_APP_WS_URL=your_websocket_url
-     ```
-
-## Running the Application
-
-1. Start the development server:
+3. Start the development server:
 ```bash
 pnpm dev
 ```
 
-2. Open your browser and navigate to:
+4. Open your browser and navigate to:
 ```
 http://localhost:5173
 ```
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-src/
-├── components/          # Reusable UI components
-├── features/
-│   ├── chat/           # Chat-related components
-│   ├── Navigation/     # Navigation and sidebar components
-│   └── Search/         # Search functionality
-├── hooks/              # Custom React hooks
-└── App.jsx            # Main application component
+DevavoUxUi/
+├── src/
+│   ├── components/     # Reusable UI components
+│   ├── features/       # Feature-specific components
+│   ├── assets/        # Static assets
+│   ├── App.jsx        # Main application component
+│   ├── main.jsx       # Application entry point
+│   └── index.css      # Global styles
+├── public/            # Public assets
+├── vite.config.js     # Vite configuration
+├── tailwind.config.js # Tailwind CSS configuration
+├── postcss.config.js  # PostCSS configuration
+└── eslint.config.js   # ESLint configuration
 ```
 
-## Key Features Explained
+## 🔧 Configuration
+
+### Environment Setup
+
+1. Create a `.env` file in the root directory:
+```env
+VITE_APP_API_URL=your_api_url
+VITE_APP_WS_URL=your_websocket_url
+```
+
+### WebSocket Configuration
+
+Update the WebSocket connection in your chat component:
+```javascript
+const websocket = new WebSocket(import.meta.env.VITE_APP_WS_URL);
+```
+
+## 🎯 Key Features
 
 ### Chat Interface
-- Real-time messaging with WebSocket connection
-- Message history with save functionality
-- Support for different message types (user/assistant)
-
-### Navigation
-- Collapsible left sidebar
-- Quick access to different sections
-- History management with categorized views
+- Real-time messaging system
+- Message history persistence
+- Support for various message types
+- Interactive chat components
+- Smart message suggestions
 
 ### Leave Management
-- Create and manage leave scenarios
-- Handle leave requests
-- View shared leave scenarios
-- Approval workflow
+- Create and track leave requests
+- Manage leave scenarios
+- View and share leave history
+- Approval workflow system
+- Status tracking
 
-## Contributing
+### User Interface
+- Modern, responsive design
+- Interactive components
+- Accessibility features
+- Loading states and animations
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+## 📝 Development Guidelines
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Support
-
-For support, please open an issue in the GitHub repository or contact the development team.
+- Use functional components and React hooks
+- Follow TailwindCSS best practices
+- Implement proper error handling
+- Write clean, maintainable code
+- Follow the established project structure
+- Use proper component naming conventions
