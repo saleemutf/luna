@@ -43,10 +43,20 @@ const ShareModal = () => null;
 // MainContent wrapper component to handle conditional rendering
 const MainContent = ({ leftPanelCollapsed, onTogglePanel }) => {
   const location = useLocation();
+  const [messages, setMessages] = useState([]);
   
-  // Show ChatInterface only on the home route
-  if (location.pathname === '/') {
-    return <ChatInterface />;
+  // Show ChatInterface on the landing page and my-leave-requests route
+  if (location.pathname === '/' || location.pathname.includes('my-leave-requests')) {
+    return (
+      <div className="flex-1 flex gap-4 p-4 overflow-hidden">
+        <div className="flex-1">
+          <ChatInterface messages={messages} setMessages={setMessages} />
+        </div>
+        <div className="w-[400px] flex-shrink-0">
+          <LeavePanel messages={messages} />
+        </div>
+      </div>
+    );
   }
   
   // Show MainContentArea for all other routes
@@ -62,13 +72,11 @@ const MainContent = ({ leftPanelCollapsed, onTogglePanel }) => {
 const AppLayout = () => {
   const [isLeftPanelCollapsed, setIsLeftPanelCollapsed] = useState(false);
   const [showSearchModal, setShowSearchModal] = useState(false);
-  const [messages, setMessages] = useState([]);
   const [showCreateScenarioModal, setShowCreateScenarioModal] = useState(false);
   const [showCreateRequestModal, setShowCreateRequestModal] = useState(false);
   const [showCreateModelScenarioModal, setShowCreateModelScenarioModal] = useState(false);
   
   const location = useLocation();
-  const isLeaveRequestsPage = location.pathname.includes('my-leave-requests');
 
   useEffect(() => {
     const link = document.createElement('link');
@@ -113,75 +121,27 @@ const AppLayout = () => {
     setIsLeftPanelCollapsed(!isLeftPanelCollapsed);
   };
 
-  if (isLeaveRequestsPage) {
-    return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-[1920px] mx-auto h-screen flex">
-          <div className={`flex-shrink-0 ${isLeftPanelCollapsed ? 'w-16' : 'w-72'}`}>
-            <LeftPanel 
-              collapsed={isLeftPanelCollapsed}
-              onSearchClick={handleOpenSearchModal}
-              onAddMyLeaveScenario={() => setShowCreateScenarioModal(true)}
-              onAddMyLeaveRequest={() => setShowCreateRequestModal(true)}
-              onAddModelLeaveScenario={() => setShowCreateModelScenarioModal(true)}
-            />
-          </div>
-          
-          <div className="flex-1 flex gap-4 p-4 overflow-hidden">
-            <div className="flex-1">
-              <ChatInterface messages={messages} setMessages={setMessages} />
-            </div>
-            <div className="w-[400px] flex-shrink-0">
-              {/* <LeavePanel messages={messages} /> */}
-            </div>
-          </div>
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <div className="max-w-[1920px] mx-auto h-screen flex">
+        <div className={`flex-shrink-0 ${isLeftPanelCollapsed ? 'w-16' : 'w-72'}`}>
+          <LeftPanel 
+            collapsed={isLeftPanelCollapsed}
+            onSearchClick={handleOpenSearchModal}
+            onAddMyLeaveScenario={() => setShowCreateScenarioModal(true)}
+            onAddMyLeaveRequest={() => setShowCreateRequestModal(true)}
+            onAddModelLeaveScenario={() => setShowCreateModelScenarioModal(true)}
+          />
         </div>
-
-        {/* Modals */}
-        <SearchModal isOpen={showSearchModal} onClose={() => setShowSearchModal(false)} />
-        <CreateItemModal 
-          isOpen={showCreateScenarioModal}
-          onClose={() => setShowCreateScenarioModal(false)}
-          modalTitle="Create My Leave Scenario"
-          inputPlaceholder="Enter scenario name..."
-          onCreate={handleCreateScenario}
-        />
-        <CreateItemModal 
-          isOpen={showCreateRequestModal}
-          onClose={() => setShowCreateRequestModal(false)}
-          modalTitle="Create My Leave Request"
-          inputPlaceholder="Enter request name..."
-          onCreate={handleCreateRequest}
-        />
-        <CreateItemModal 
-          isOpen={showCreateModelScenarioModal}
-          onClose={() => setShowCreateModelScenarioModal(false)}
-          modalTitle="Create Model Leave Scenario"
-          inputPlaceholder="Enter model leave scenario name..."
-          onCreate={handleCreateModelScenario}
+        
+        <MainContent 
+          leftPanelCollapsed={isLeftPanelCollapsed}
+          onTogglePanel={handleTogglePanel}
         />
       </div>
-    );
-  }
 
-  // Original layout for other routes
-  return (
-    <div className="flex h-screen font-sans bg-white overflow-hidden">
-      <LeftPanel 
-        collapsed={isLeftPanelCollapsed}
-        onSearchClick={handleOpenSearchModal}
-        onAddMyLeaveScenario={() => setShowCreateScenarioModal(true)}
-        onAddMyLeaveRequest={() => setShowCreateRequestModal(true)}
-        onAddModelLeaveScenario={() => setShowCreateModelScenarioModal(true)}
-      />
-      
-      <MainContentArea 
-        leftPanelCollapsed={isLeftPanelCollapsed}
-        onTogglePanel={handleTogglePanel}
-      />
-
+      {/* Modals */}
       <SearchModal isOpen={showSearchModal} onClose={() => setShowSearchModal(false)} />
-      
       <CreateItemModal 
         isOpen={showCreateScenarioModal}
         onClose={() => setShowCreateScenarioModal(false)}
@@ -189,7 +149,6 @@ const AppLayout = () => {
         inputPlaceholder="Enter scenario name..."
         onCreate={handleCreateScenario}
       />
-      
       <CreateItemModal 
         isOpen={showCreateRequestModal}
         onClose={() => setShowCreateRequestModal(false)}
@@ -197,7 +156,6 @@ const AppLayout = () => {
         inputPlaceholder="Enter request name..."
         onCreate={handleCreateRequest}
       />
-      
       <CreateItemModal 
         isOpen={showCreateModelScenarioModal}
         onClose={() => setShowCreateModelScenarioModal(false)}

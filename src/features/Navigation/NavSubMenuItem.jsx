@@ -15,12 +15,19 @@ const NavSubMenuItem = ({
   href = "#", 
   isLocked = false,
   dropdownItems = [],
-  itemData // Pass the original item data for context in actions
+  itemData, // Pass the original item data for context in actions
+  onClick // Add onClick handler prop
 }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [shareSubmenuOpen, setShareSubmenuOpen] = useState(false);
   const dropdownRef = useRef(null);
   const shareTriggerRef = useRef(null);
+
+  const handleClick = (e) => {
+    if (onClick) {
+      onClick(e);
+    }
+  };
 
   const handleToggleDropdown = (e) => {
     e.preventDefault();
@@ -66,9 +73,12 @@ const NavSubMenuItem = ({
 
   return (
     <div className={`submenu-item group relative flex justify-between items-center py-1.5 px-2 rounded-md hover:bg-gray-50 text-xs mb-0.5 transition-colors duration-150 ${isLocked ? 'text-gray-400 cursor-not-allowed' : 'text-gray-700'}`}>
-      <a href={isLocked ? undefined : href} className={`nav-itemx flex-grow hover:text-gray-900 ${isLocked ? 'pointer-events-none' : ''}`}>
+      <div 
+        onClick={handleClick}
+        className={`nav-itemx flex-grow hover:text-gray-900 ${isLocked ? 'pointer-events-none' : 'cursor-pointer'}`}
+      >
         {title}
-      </a>
+      </div>
       {dropdownItems.length > 0 && (
         <button 
             onClick={handleToggleDropdown} 

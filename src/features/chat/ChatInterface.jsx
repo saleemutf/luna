@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import ConfirmationModal from '../../components/ConfirmationModal';
 
 const ChatInterface = ({ messages, setMessages }) => {
   const [inputMessage, setInputMessage] = useState('');
   const [status, setStatus] = useState('Disconnected');
   const [ws, setWs] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -88,12 +90,21 @@ const ChatInterface = ({ messages, setMessages }) => {
     connect();
   };
 
+  const handleResetChat = () => {
+    // Check if there's an active chat (messages exist)
+    if (messages.length > 0) {
+      setIsModalOpen(true);
+    } else {
+      resetChat();
+    }
+  };
+
   return (
     <div className="flex flex-col h-full bg-white rounded-lg shadow-sm">
       <div className="flex items-center justify-between p-4 border-b">
         <div className="text-lg font-semibold">Leave Assistant</div>
         <button
-          onClick={resetChat}
+          onClick={handleResetChat}
           className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700"
         >
           New Chat
@@ -137,6 +148,13 @@ const ChatInterface = ({ messages, setMessages }) => {
           Send
         </button>
       </div>
+
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onConfirm={resetChat}
+        message="Do you want to start a new chat?"
+      />
     </div>
   );
 };

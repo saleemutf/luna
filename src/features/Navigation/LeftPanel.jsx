@@ -40,15 +40,16 @@ const LeftPanel = ({
   // Sample data for My Leave Requests
   const myLeaveRequestsData = {
     items: [
-      { id: 'mlr1', title: 'PL1 on Apr 25', href: '/my-leave-requests/pl1' },
-      { id: 'mlr2', title: 'PL2 on Apr 25',href: '/my-leave-requests/pl2' },
-      { id: 'mlr3', title: 'PL3 on Apr 25',href: '/my-leave-requests/pl3' },
+      { id: 'mlr1', title: 'PL1 on Apr 25' },
+      { id: 'mlr2', title: 'PL2 on Apr 25' },
+      { id: 'mlr3', title: 'PL3 on Apr 25' },
     ],
     morePopupSections: [
         { title: 'Today', items: [{ id:'lr_th1', title: 'PL11 on Apr 25', icon: 'fas fa-calendar', meta: '2:30 PM' }] },
     ]
   };
   const myLeaveRequestsDropdown = (item) => [
+    { label: 'View Details', icon: 'fas fa-eye', action: (itemData) => console.log('View details:', itemData.title) },
     { label: 'Rename', icon: 'fas fa-edit', action: (itemData) => console.log('Rename request:', itemData.title) },
     { label: 'Cancel', icon: 'fas fa-times-circle', action: (itemData) => console.log('Cancel request:', itemData.title) },
     { label: 'Delete', icon: 'fas fa-trash', action: (itemData) => console.log('Delete request:', itemData.title) },
@@ -101,7 +102,9 @@ const LeftPanel = ({
   };
 
   // Handlers for QuickActions (to be implemented, e.g., show modals)
-  const handleNewChatClick = () => console.log('New Chat clicked');
+  const handleNewChatClick = () => {
+    window.location.href = '/';
+  };
 
   // Handlers for MorePopup item click
   const handleMoreItemClick = (item) => console.log('More item clicked:', item.title);
@@ -160,9 +163,12 @@ const LeftPanel = ({
           <NavSubMenuItem 
             key={item.id} 
             title={item.title} 
-            href={item.href}
             dropdownItems={myLeaveRequestsDropdown(item)}
             itemData={item}
+            onClick={(e) => {
+              e.preventDefault();
+              console.log('Clicked on leave request:', item.title);
+            }}
           />
         ))}
         <MoreLinkWithPopup popupTitle="My Leave Requests History" sections={myLeaveRequestsData.morePopupSections} onItemClick={handleMoreItemClick} />
