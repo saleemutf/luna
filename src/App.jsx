@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import './App.css'; // Keep for now, might prune later
 
 import LeftPanel from './features/Navigation/LeftPanel';
-import MainContentArea from './features/Chat/MainContentArea';
+import MainContentArea from './features/chat/MainContentArea';
 import SearchModal from './features/Search/SearchModal';
 import CreateItemModal from './components/Modal/CreateItemModal'; // Import CreateItemModal
 import ChatInterface from './features/chat/ChatInterface';
 import LeavePanel from './features/chat/LeavePanel';
-// import ListeningUI from './features/Chat/ListeningUI';
-// import VoiceWaveOverlay from './features/Chat/VoiceWaveOverlay';
+// import ListeningUI from './features/chat/ListeningUI';
+// import VoiceWaveOverlay from './features/chat/VoiceWaveOverlay';
 // import SearchModal from './features/Search/SearchModal';
-// import VoicePromptModal from './features/Chat/VoicePromptModal';
+// import VoicePromptModal from './features/chat/VoicePromptModal';
 
 // Placeholder components to avoid import errors for now
 // const LeftPanel = () => <div className="left-panel-placeholder bg-gray-800 w-1/4 h-screen p-4 text-white">Left Panel Placeholder</div>;
