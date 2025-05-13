@@ -13,7 +13,9 @@ const ChatInterface = ({ messages, setMessages }) => {
   };
 
   const connect = () => {
-    const websocket = new WebSocket('ws://localhost:8000/ws/chat');
+    const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000';
+    const wsPath = import.meta.env.VITE_WS_PATH || '/ws/chat';
+    const websocket = new WebSocket(`${wsUrl}${wsPath}`);
     
     websocket.onopen = () => {
       setStatus('Connected');
