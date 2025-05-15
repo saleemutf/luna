@@ -117,6 +117,20 @@ const LeftPanel = ({
   // Handler for static history item click
   const handleSidebarHistoryItemClick = (item) => {
     if (item.messages) {
+      const userMessages = item.messages
+        .filter(msg => msg.type === 'user')
+        .map(msg => String(msg.content))
+        .join(' ');
+      console.log('User messages from chat history:', userMessages);
+      
+      // Get the WebSocket instance from the ChatInterface
+      const ws = window.sharedWs;
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(userMessages);
+      } else {
+        console.warn('WebSocket is not connected. Cannot send messages.');
+      }
+      
       setMessages(item.messages);
       navigate('/', { replace: true });
     }

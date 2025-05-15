@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import ConfirmationModal from '../../components/ConfirmationModal';
 
+// Create a WebSocket instance that can be shared
+let sharedWs = null;
+
 const ChatInterface = ({ messages, setMessages }) => {
   const [inputMessage, setInputMessage] = useState('');
   const [status, setStatus] = useState('Disconnected');
@@ -19,10 +22,12 @@ const ChatInterface = ({ messages, setMessages }) => {
     
     websocket.onopen = () => {
       setStatus('Connected');
+      window.sharedWs = websocket; // Make the WebSocket instance globally accessible
     };
 
     websocket.onclose = () => {
       setStatus('Disconnected - Reconnecting...');
+      window.sharedWs = null; // Clear the reference when connection is closed
       setTimeout(connect, 1000);
     };
 
@@ -54,6 +59,7 @@ const ChatInterface = ({ messages, setMessages }) => {
     };
 
     setWs(websocket);
+    sharedWs = websocket; // Store the WebSocket instance in the shared variable
   };
 
   useEffect(() => {
